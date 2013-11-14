@@ -1,4 +1,5 @@
-function [dt, v, x] = getmotion(name)
+% This function takes in name of the data set adn gives [dt, R, x]
+function [dt, v, x, Rmat] = getmotion(name)
     fid = fopen(strcat(name,'acc.csv'));
     C = textscan(fid, '%f %f %f %f', 'Delimiter',',','EndOfLine','\n');
     fclose(fid);
@@ -10,7 +11,7 @@ function [dt, v, x] = getmotion(name)
     fclose(fid);
 
     Xrot = cell2mat(C(:,1:10));
-
+    Rmat = Xrot(:,2:10);
     apt = Xacc(:,2:4) ;
     api = 0*apt;
     dt  = zeros(size(Xacc(:,1),1),1);
